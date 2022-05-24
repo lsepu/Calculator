@@ -1,6 +1,4 @@
 package com.sofka;
-
-import java.util.function.Function;
 import java.util.stream.IntStream;
 
 public class Calculator {
