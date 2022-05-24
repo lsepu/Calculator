@@ -1,19 +1,24 @@
 package com.sofka;
 
-import java.util.Arrays;
 import java.util.stream.IntStream;
 
 public class Calculator {
 
+    private static final ISum sum = (x,y) -> x+y;
+
+    private static final ISubstract substract = (x,y) -> x-y;
+
+    private static final IMultiply multiply = (x,y) -> IntStream.range(0, y).reduce(0,(a,b) -> sum.calculate(x,a));
+
+    //using recursivity to count the iterations. the number 1 is used as base case
+    private static final IDivide division = (x,y) -> substract.calculate(x,y) == 0 ? 1 : Calculator.division.calculate(substract.calculate(x,y), y) + 1;
+
     public static void main(String[] args) {
-        ISum sum = (x,y) -> x+y;
-        ISubstract substract = (x,y) -> x-y;
-        IMultiply multiply = (x,y) -> IntStream.range(0, y).reduce(0,(a,b) -> x+a);
 
-
-        System.out.println("Sum example: " + sum.calculate(3,2));
-        System.out.println("Substraction example: " + substract.calculate(3,2));
-        System.out.println("Multiplication example: " + multiply.calculate(3,2));
+        System.out.println("Sum example: " + sum.calculate(10,2));
+        System.out.println("Substraction example: " + substract.calculate(10,2));
+        System.out.println("Multiplication example: " + multiply.calculate(10,2));
+        System.out.println("Division example: " + division.calculate(24,2));
 
     }
 }
